@@ -12,6 +12,13 @@
             Console.WriteLine($"Default type of srting data type is: {default(string)}");
             Console.WriteLine($"Default type of bool data type is: {default(bool)}");
 
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine($"Iteration number {i}");
+            }
+
+
         }
     }
 }
