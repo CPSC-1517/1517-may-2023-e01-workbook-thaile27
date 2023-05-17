@@ -69,11 +69,26 @@
         public DateTime StartDate { get; private set; }
 
 
-        // Methods
-        public void CorrectStartDate(DateTime startDate)
-        {
 
-        }
+        // Constructors
+        //
+        // the purpose of a constructor is to create an instance of your class
+        //      in a known state.
+        //does a class definition need a constructor? NO.
+        //   if a class definition does NOT have a constructor then the system
+        //   will create the instance and assign the system default value to data member
+        //   and/or auto implemented property
+        //   if you have no constructor the common phrase is "using a system constructor"
+        //
+        //IF YOU CODE A CONSTRUCTOR IN YOUR CLASS YOU ARE RESPONSIBLE FOR ANY AND ALL CONSTRUCTORS
+        //FOR THE CLASS!!!
+
+
+        //"default" constructor
+        //you can apply your own literal values for your data members and/or auto-implemented properties
+        //  that differ from the system default values
+        //why? you may have data that is validated and using the system default values would cause an
+        //  exception
         public Employment()
         {
             // this constructor will be used on creating an instance using
@@ -89,6 +104,15 @@
             // UNLESS you wish to 
 
         }
+
+        //greedy constructor
+        //a greedy constructor is one that accepts a parameter list of values to
+        //  assign to your instance data on creation of the instance
+        //generally your greedy constructor constains a parameter on the signature
+        //  for each data member you have in your class definition
+
+        //all default parameters must appear AFTER non-default parameters in your parameter list
+        //in this example, we will use Years as an default parameter
 
         // In this example, we will use Years as an default parameter
         public Employment(string title, SupervisoryLevel level, DateTime startDate, double year = 0.0)
@@ -117,9 +141,34 @@
             StartDate = startDate;
 
         }
+
+        // Methods
+        // Behaviours (aka methods)
         public void SetEmploymentResponsibilityLevel(SupervisoryLevel level)
         {
+            // the property has a private set
+            // Therefore the only way to assign a value to the property 
+            //      is either: via the constructor at creation time
+            //      or: via a public method within the class
 
+            // What about validating the value? 
+            // Validation can be done in multiple places
+            // a. can it be done in the method? Y
+            // b. can it be done in the property? Y if property is fully implemented
+
+            Level = level;
+        }
+        public void CorrectStartDate(DateTime startDate)
+        {
+            // the StartDate property is an auto implemented property
+            // The startDate property has no Validation code
+            // You need to do any validation on incoming value wherever you plan to alter the existing value in the class
+
+            if (startDate >= DateTime.Today.AddDays(1))
+            {
+                throw new ArgumentException($"The start date {startDate} is in the future");
+            }
+            StartDate = startDate; 
         }
         public override string ToString()
         {

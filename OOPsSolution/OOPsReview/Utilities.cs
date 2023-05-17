@@ -21,7 +21,7 @@
             // In this course, you will AVOID using a break to exit a loop structure or if structure
 
             bool valid = true;
-            if (value < 0)
+            if (value < 0.0)
             {
                 valid = false;
             }
@@ -37,7 +37,7 @@
             // In this course, you will AVOID using a break to exit a loop structure or if structure
 
             bool valid = true;
-            if (value < 0)
+            if (value < 0.0)
             {
                 valid = false;
             }
