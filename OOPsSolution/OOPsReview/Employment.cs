@@ -168,7 +168,7 @@
             {
                 throw new ArgumentException($"The start date {startDate} is in the future");
             }
-            StartDate = startDate; 
+            StartDate = startDate;
         }
         public override string ToString()
         {
