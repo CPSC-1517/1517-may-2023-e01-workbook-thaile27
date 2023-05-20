@@ -5,12 +5,6 @@ namespace UnitTestingForSystem
 {
     public class Employment_Should
     {
-        // This is XUnit testing.
-        // A unit test is identified by the attribute [Fact] or [Theory]
-        // 
-        // [Fact] is a unit test that receives no input parameters
-        // [Theory] is a unit test that receives input parameter
-
         #region Valid Data
         [Fact]
         public void Create_New_Default_Instance()
@@ -164,7 +158,7 @@ namespace UnitTestingForSystem
 
 
             //When - Act execution
-            double actual = sut.UpdateCurrentEmploymentYearsExperience();
+            double actual = sut.UpdateCurrentEmploymentYearsExperince();
 
             //Then - Assert check
             actual.Should().Be(expectedYears);

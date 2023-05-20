@@ -8,9 +8,6 @@
         private double _Years;
 
         // Properties 
-
-
-
         public string Title
         {
             get { return _Title; }
@@ -102,7 +99,6 @@
             // Optionally one could set yours to zero, but that is the system default
             // value for a numeric, therefore one does not need to assign a value 
             // UNLESS you wish to 
-
         }
 
         //greedy constructor
@@ -143,38 +139,47 @@
         }
 
         // Methods
-        // Behaviours (aka methods)
-        public void SetEmploymentResponsibilityLevel(SupervisoryLevel level)
+        //Behaviours (a.k.a. methods)
+        //a method consists of a header (accesslevel rdt methodname ([list of parameters])
+        //                     a coding block     { ....... }
+
+        public void SetEmploymentResponsiblityLevel(SupervisoryLevel level)
         {
-            // the property has a private set
-            // Therefore the only way to assign a value to the property 
-            //      is either: via the constructor at creation time
-            //      or: via a public method within the class
-
-            // What about validating the value? 
-            // Validation can be done in multiple places
-            // a. can it be done in the method? Y
-            // b. can it be done in the property? Y if property is fully implemented
-
+            //the property has a private set
+            //therefore the only ways to assign a value to the Property
+            //   is either: via the constructor are creation time
+            //          or: via a public method within the class
+            //
+            //what about validation the value?
+            //validation can be done in multiple places
+            //   a) can it be done in this method: Yes
+            //   b) can it be done in the property: Yes if property fully implement
             Level = level;
         }
-        public void CorrectStartDate(DateTime startDate)
-        {
-            // the StartDate property is an auto implemented property
-            // The startDate property has no Validation code
-            // You need to do any validation on incoming value wherever you plan to alter the existing value in the class
 
-            if (startDate >= DateTime.Today.AddDays(1))
+        public void CorrectStartDate(DateTime startdate)
+        {
+            //the StartDate property is an auto implemented property
+            //The StartDate property has NO validation code
+            //You need to do any validation on the incoming value
+            //  wherever you plan to alter the existing value in the class
+            if (startdate >= DateTime.Today.AddDays(1))
             {
-                throw new ArgumentException($"The start date {startDate} is in the future");
+                throw new ArgumentException($"The start date {startdate} is in the future");
             }
-            StartDate = startDate;
+            StartDate = startdate;
         }
+
+        public double UpdateCurrentEmploymentYearsExperince()
+        {
+            TimeSpan span = DateTime.Now - StartDate;
+            Years = Math.Round(span.Days / 365.25, 1);
+            return Years;
+        }
+
         public override string ToString()
         {
-            return $"{_Title}, {_Level}";
+            return $"{Title},{Level},{StartDate.ToString("MMM dd, yyyy")},{Years}";
         }
-
-
     }
 }
