@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOPsReview", "OOPsReview\OO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestingForSystem", "UnitTestingForSystem\UnitTestingForSystem.csproj", "{F6F7A0B0-6277-45F1-AB8A-286A07940219}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{D40665DE-6C47-4AFD-B68A-3BD39C0E85BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B6B8939F-CBA1-4AAD-939B-4F7DB0B101AC} = {B6B8939F-CBA1-4AAD-939B-4F7DB0B101AC}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +26,10 @@ Global
 		{F6F7A0B0-6277-45F1-AB8A-286A07940219}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6F7A0B0-6277-45F1-AB8A-286A07940219}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6F7A0B0-6277-45F1-AB8A-286A07940219}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40665DE-6C47-4AFD-B68A-3BD39C0E85BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40665DE-6C47-4AFD-B68A-3BD39C0E85BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40665DE-6C47-4AFD-B68A-3BD39C0E85BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40665DE-6C47-4AFD-B68A-3BD39C0E85BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
