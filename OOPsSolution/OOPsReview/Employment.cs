@@ -47,7 +47,7 @@
                 //if (value < 0) 
                 if (!Utilities.IsZeroOrPositive(value))
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(value.ToString());
                 }
                 _Years = value;
             }
@@ -111,11 +111,11 @@
         //in this example, we will use Years as an default parameter
 
         // In this example, we will use Years as an default parameter
-        public Employment(string title, SupervisoryLevel level, DateTime startDate, double year = 0.0)
+        public Employment(string title, SupervisoryLevel level, DateTime startDate, double years = 0.0)
         {
             Title = title;
             Level = level;
-            Years = year;
+            Years = years;
 
             //this example to demonstrating where you can place validation for
             //  properties have are auto-implemented
@@ -135,6 +135,16 @@
                 throw new ArgumentException($"The start date {startDate} is in the future");
             }
             StartDate = startDate;
+
+            if (years > 0.0)
+            {
+                Years = (double)years;
+            }
+            else
+            {
+                TimeSpan span = DateTime.Now - StartDate;
+                Years = Math.Round(span.Days / 365.25, 1);
+            }
 
         }
 

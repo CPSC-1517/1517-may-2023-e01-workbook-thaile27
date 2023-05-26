@@ -114,7 +114,7 @@ namespace UnitTestingForSystem
             Employment sut = new Employment(Title, Level, StartDate, Years);
             SupervisoryLevel expectedLevel = SupervisoryLevel.Supervisor;
             //When - Act execution
-            sut.SetEmploymentResponsibilityLevel(SupervisoryLevel.Supervisor);
+            sut.SetEmploymentResponsiblityLevel(SupervisoryLevel.Supervisor);
 
             //Then - Assert check
             sut.Level.Should().Be(expectedLevel);
@@ -174,7 +174,7 @@ namespace UnitTestingForSystem
             TimeSpan days = DateTime.Today - StartDate;
             double Years = Math.Round(days.Days / 365.2, 1);
             Employment sut = new Employment(Title, Level, StartDate, Years);
-            string expectedCSV = $"SAS Lead,TeamLeader,Oct. 24, 2020,{Years}";
+            string expectedCSV = $"SAS Lead,TeamLeader,Oct 24, 2020,{Years}";
 
             //When - Act execution
             string actual = sut.ToString();
