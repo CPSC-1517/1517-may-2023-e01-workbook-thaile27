@@ -2,13 +2,44 @@
 {
     public class Person
     {
-        public string _firstName;
-        public string _lastName;
+        // fields
+        private string _FirstName;
+        private string _LastName;
 
-        public Person(string firstName, string lastName)
+        // Properties
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Residence Address { get; set; }
+        public List<Employment> EmploymentPositions { get; set; } = new List<Employment>();
+
+        public Person(string firstName, string lastName, Residence address, List<Employment> employmentPositions)
         {
-            _firstName = firstName;
-            _lastName = lastName;
+            if (string.IsNullOrWhiteSpace(firstName))
+            {
+                throw new ArgumentNullException(nameof(firstName), "first name is required");
+            }
+            if (string.IsNullOrWhiteSpace(lastName))
+            {
+                throw new ArgumentNullException(nameof(lastName), "last name is required");
+            }
+            FirstName = firstName;
+            LastName = lastName;
+            Address = address;
+            if (employmentPositions != null)
+            {
+                EmploymentPositions = employmentPositions; // store the supplied list of employments
+            }
+            //else
+            //{
+            //    EmploymentPositions = new List<Employment>(); // create an empty instance of the list
+            //}
+        }
+
+        public Person()
+        {
+            FirstName = "unknown";
+            LastName = "unknown";
+            //EmploymentPositions = new List<Employment>();
         }
     }
 }
