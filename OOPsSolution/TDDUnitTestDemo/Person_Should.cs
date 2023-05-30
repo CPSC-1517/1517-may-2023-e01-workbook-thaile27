@@ -73,7 +73,7 @@ namespace TDDUnitTestDemo
             string expectedAddress = "123,Maple St.,Edmonton,AB,T6Y7U8";
             Person me = new Person("unknown", lastName, address, null);
 
-            string expectedLastName = "smith";
+            string expectedLastName = "Smith";
 
             // Act (execution) (sut = subject under test)
             me.FirstName = expectedLastName;
@@ -103,30 +103,52 @@ namespace TDDUnitTestDemo
             // Assert (testing of the action)
             action.Should().Throw<ArgumentNullException>();
         }
-
         [Theory]
         [InlineData(null)]
-
         [InlineData("")]
-
-        [InlineData("   ")]
-        [InlineData("Hai")]
-        public void Throw_Exception_When_Setting_FirstName_To_Missing_Data(string firstName)
+        [InlineData("    ")]
+        public void Throw_Exception_When_Setting_FirstName_To_Missing_Data(string changeName)
         {
             // Arrange (setup)
             string lastName = "Le";
+            string firstName = "Hai";
             Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
-            string expectedAddress = "123,Maple St.,Edmonton,AB,T6Y7U8";
-            Person me = new Person("unknown", lastName, address, null);
-            string expectedFirstName = "unknown";
+            Person me = new Person(firstName, lastName, address, null);
 
-            // Act (execution) (sut = subject under test)
-            Action action = () => new Person(firstName, lastName, address, null);
+            // Act (execution) (testing will the property capture an invalid name change)
+            // Action is a special unit testing data type that records the results of the executed statement into variable action
+            // Assignment operator '='
+            // () => for the following code execution
+            // me.FirstName = changeName is actual action that is being tested as if it were really in a program
+
+            Action action = () => me.FirstName = changeName;
 
             // Assert (testing of the action)
             action.Should().Throw<ArgumentNullException>();
         }
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("    ")]
+        public void Throw_Exception_When_Setting_LastName_To_Missing_Data(string changeName)
+        {
+            // Arrange (setup)
+            string firstName = "Hai";
+            string lastName = "Le";
+            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
+            Person me = new Person(firstName, lastName, address, null);
 
+            // Act (execution) (testing will the property capture an invalid name change)
+            // Action is a special unit testing data type that records the results of the executed statement into variable action
+            // Assignment operator '='
+            // () => for the following code execution
+            // me.FirstName = changeName is actual action that is being tested as if it were really in a program
+
+            Action action = () => me.LastName = changeName;
+
+            // Assert (testing of the action)
+            action.Should().Throw<ArgumentNullException>();
+        }
 
         #endregion
 

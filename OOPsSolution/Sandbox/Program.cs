@@ -56,5 +56,15 @@ internal class Program
                 break;
         }
 
+        // Arrange (setup)
+        // What would a person need to do if unit testing does not exist
+        string lastName = "Le";
+        string firstName = "Hai";
+        Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
+        Person me = new Person(firstName, lastName, address, null);
+
+        // Consider doing a loop where i make changes to the "changename", include try catch error handling
+        // also need a 
+
     }
 }
