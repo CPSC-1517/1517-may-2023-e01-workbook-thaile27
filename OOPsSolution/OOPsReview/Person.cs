@@ -31,6 +31,7 @@
                 _LastName = value;
             }
         }
+        public string FullName { get { return $"{FirstName}, {LastName}"; } }
         public Residence Address { get; set; }
         public List<Employment> EmploymentPositions { get; set; } = new List<Employment>();
 
@@ -63,5 +64,8 @@
             LastName = "unknown";
             //EmploymentPositions = new List<Employment>();
         }
+
+        // Class methods
+       
     }
 }

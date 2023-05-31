@@ -9,6 +9,17 @@ namespace TDDUnitTestDemo
 
     public class Person_Should
     {
+        public Person Make_SUT_Instance()
+        {
+            string firstName = "Hai";
+            string lastName = "Le";
+            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
+            Person sut = new Person(firstName, lastName, address, null);
+
+            return sut;
+        }
+
+
         #region Valid data
         [Fact]
         public void Create_an_Instance_Using_Default_Constructor()
@@ -49,11 +60,7 @@ namespace TDDUnitTestDemo
         public void Change_FirstName_to_New_Name()
         {
             // Arrange (setup)
-            string firstName = "Hai";
-            string lastName = "Le";
-            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
-            string expectedAddress = "123,Maple St.,Edmonton,AB,T6Y7U8";
-            Person me = new Person("unknown", lastName, address, null);
+            Person me = Make_SUT_Instance();
 
             string expectedFirstName = "bob";
 
@@ -67,11 +74,7 @@ namespace TDDUnitTestDemo
         public void Change_LastName_to_New_Name()
         {
             // Arrange (setup)
-            string firstName = "Hai";
-            string lastName = "Le";
-            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
-            string expectedAddress = "123,Maple St.,Edmonton,AB,T6Y7U8";
-            Person me = new Person("unknown", lastName, address, null);
+            Person me = Make_SUT_Instance();
 
             string expectedLastName = "Smith";
 
@@ -80,6 +83,18 @@ namespace TDDUnitTestDemo
 
             // Assert (testing of the action)
             me.FirstName.Should().Be(expectedLastName);
+        }
+        [Fact] 
+        public void Return_The_FullName_Of_The_Person()
+        {
+            // Arrange
+            Person sut = Make_SUT_Instance();
+
+            // Act
+            string expectedFullName = "Hai, Le";
+
+            // Assert
+            sut.FullName.Should().Be(expectedFullName);
         }
         #endregion
 
@@ -110,10 +125,7 @@ namespace TDDUnitTestDemo
         public void Throw_Exception_When_Setting_FirstName_To_Missing_Data(string changeName)
         {
             // Arrange (setup)
-            string lastName = "Le";
-            string firstName = "Hai";
-            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
-            Person me = new Person(firstName, lastName, address, null);
+            Person me = Make_SUT_Instance();
 
             // Act (execution) (testing will the property capture an invalid name change)
             // Action is a special unit testing data type that records the results of the executed statement into variable action
@@ -133,10 +145,7 @@ namespace TDDUnitTestDemo
         public void Throw_Exception_When_Setting_LastName_To_Missing_Data(string changeName)
         {
             // Arrange (setup)
-            string firstName = "Hai";
-            string lastName = "Le";
-            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
-            Person me = new Person(firstName, lastName, address, null);
+            Person me = Make_SUT_Instance();
 
             // Act (execution) (testing will the property capture an invalid name change)
             // Action is a special unit testing data type that records the results of the executed statement into variable action
