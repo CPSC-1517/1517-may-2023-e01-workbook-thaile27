@@ -19,7 +19,6 @@ namespace TDDUnitTestDemo
             return sut;
         }
 
-
         #region Valid data
         [Fact]
         public void Create_an_Instance_Using_Default_Constructor()
@@ -89,12 +88,65 @@ namespace TDDUnitTestDemo
         {
             // Arrange
             Person sut = Make_SUT_Instance();
-
-            // Act
             string expectedFullName = "Hai, Le";
 
+            // Act
+            string actual = sut.FullName;
+
             // Assert
-            sut.FullName.Should().Be(expectedFullName);
+            actual.Should().Be(expectedFullName);
+        }
+        [Fact]
+        public void Return_The_Number_Of_Employment_Instances_For_New_Person()
+        {
+            // Arrange
+            Person sut = Make_SUT_Instance();
+
+            // Act
+            int actual = sut.NumberOfEmployments;
+
+            // Assert
+            actual.Should().Be(0);
+        }
+
+        [Fact] 
+        public void Add_First_Employment_Instance()
+        {
+            // Arrange
+            Person sut = Make_SUT_Instance();
+            
+            int expectedNumberOfEmployment = 1;
+
+            Employment employment = new Employment("TDD member", SupervisoryLevel.TeamMember, new DateTime(2018, 05, 10));
+
+            // Act
+            sut.AddEmployment(null);
+
+            // Assert
+            sut.NumberOfEmployments.Should().Be(expectedNumberOfEmployment);
+            sut.EmploymentPositions.ToString().Should().Be(employment.ToString());
+        }
+        [Fact]
+        public void Add_Another_Employment_Instance()
+        {
+            // Arrange
+            string firstName = "Hai";
+            string lastName = "Le";
+            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
+            List<Employment> employments = new List<Employment>();
+
+            employments.Add(new Employment("TDD Member", SupervisoryLevel.TeamMember, new DateTime(2016, 05, 10)));
+            employments.Add(new Employment("TDD Lead", SupervisoryLevel.TeamLeader, new DateTime(2020, 05, 10)));
+
+            Person sut = new Person(firstName, lastName, address, employments);
+
+            int expectedNumberOfEmployment = 3;
+
+            // Act
+            sut.AddEmployment(new Employment("TDD Supervisor", SupervisoryLevel.Supervisor, new DateTime(2023, 05, 10)));
+
+            // Assert
+            sut.NumberOfEmployments.Should().Be(expectedNumberOfEmployment);
         }
         #endregion
 
@@ -158,6 +210,22 @@ namespace TDDUnitTestDemo
             // Assert (testing of the action)
             action.Should().Throw<ArgumentNullException>();
         }
+
+        public void Throw_Exception_When_Adding_Null_Employment_Instance()
+        {
+            // Arrange
+            Person sut = Make_SUT_Instance();
+            int expectedNumberOfEmployment = 1;
+
+            Employment employment = new Employment("TDD member", SupervisoryLevel.TeamMember, new DateTime(2018, 05, 10));
+
+            // Act
+            Action action = () => sut.AddEmployment(null);
+
+            // Assert
+            action.Should().Throw<ArgumentNullException>().WithMessage("*required*");
+        }
+        
 
         #endregion
 

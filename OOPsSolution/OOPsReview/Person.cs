@@ -34,7 +34,14 @@
         public string FullName { get { return $"{FirstName}, {LastName}"; } }
         public Residence Address { get; set; }
         public List<Employment> EmploymentPositions { get; set; } = new List<Employment>();
+        
+        public int NumberOfEmployments
+        { 
+            get { return EmploymentPositions.Count(); } 
+        }
 
+
+        // Constructors
         public Person(string firstName, string lastName, Residence address, List<Employment> employmentPositions)
         {
             //if (string.IsNullOrWhiteSpace(firstName))
@@ -66,6 +73,21 @@
         }
 
         // Class methods
+        public void ChangeName(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+        public void AddEmployment(Employment employment)
+        {
+            if (employment == null)
+            {
+                throw new ArgumentNullException("Employment record position is required");
+            }
+
+            EmploymentPositions.Add(employment);
+        }
        
     }
 }
