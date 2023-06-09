@@ -55,8 +55,20 @@ void SaveAsJson(Person person, string filepathname)
     // create options to use during serialization 
     JsonSerializerOptions options = new JsonSerializerOptions
     {
-
+        // During this instance creation, you can refer to properties
+        // within the class directly by name and assign a value to that properties
+        WriteIndented = true,
+        IncludeFields = true // this is for the public non property fields of a class
     };
+
+    // remember to case to the Serialize<T> to the appropriate class definition
+    // this converts your instance to a join string
+
+    string jsonstring = JsonSerializer.Serialize(person, options);
+
+    // write the json string out to a .json text file 
+    File.WriteAllText(filepathname, jsonstring);
+
 }
 
 void FileIOCSV()
