@@ -189,7 +189,80 @@
 
         public override string ToString()
         {
-            return $"{Title},{Level},{StartDate.ToString("MMM dd, yyyy")},{Years}";
+            return $"{Title},{Level},{StartDate.ToString("MMM dd yyyy")},{Years}";
+        }
+        public static Employment Parse(string str)
+        {
+            //Parsing attempts to change the contents of a string into another datatype
+            // example:   string 55  --> int x = int.Parse(string); success
+            //            string bob --> int x = int.Parse(string); failed with an exception message
+
+            //text is a string of csv values (comma separate values)
+            //separate the string of values into individual strings
+            //  using .Split(delimiter)
+            //a delimiter is normally some type of character
+            //for a csv, the delimiter is a comma (',')
+            //the .Split() method returns an array of strings
+            //test the array size to determine if sufficient "parts" have be supplied
+            //if not, throw a FormatException
+            //if sufficient parts have been supplied you can continue your logic in 
+            //  creating the instance of intent
+
+            string[] pieces = str.Split(',');
+            if (pieces.Length != 4)
+            {
+                throw new FormatException($"Record {str} not in the expected format.");
+            }
+
+            //if sufficient parts have been supplied you can continue your logic in 
+            //  creating the instance of intent
+
+            //create a new instance using the greedy constructor
+
+            return new Employment(pieces[0],
+                                  (SupervisoryLevel)Enum.Parse(typeof(SupervisoryLevel), pieces[1]),
+                                  DateTime.Parse(pieces[2]),
+                                  double.Parse(pieces[3])
+                                  );
+        }
+
+        public static bool TryParse(string str, out Employment employment)
+        {
+            //use this method to check to see if the parse could actually be done
+            //the result of the attempt is
+            //  a) true and the converted string value is placed into the out going variable
+            //  b) false and no conversion of the string is done
+            //     (optional,
+            //          you can include a try/catch within the method to capture (error handling) the 
+            //          Parse error so that it does not return to the program
+            //          and your false value will have a meaning)
+
+            //example   if (xxxx.TryParse(string, out myNumericvalue)) { ..... } else { .... }
+
+            bool result = true; //assume success
+            employment = null;
+            try
+            {
+                employment = Parse(str);
+            }
+            catch (FormatException ex)
+            {
+                result = false; //indicates failure
+            }
+            return result;
+
+            //alternative
+            //if you wish to have the FormatException passed on to the calling coding
+            //  the DO NOT include the try/catch within your TryParse method
+
+            //result = false;
+            //if (string.IsNullOrWhiteSpace(str))
+            //{
+            //    throw new ArgumentNullException("No value was supplied for parsing");
+            //}
+            //employment = null;
+            //employment = Parse(str);
+            //return true;
         }
     }
 }

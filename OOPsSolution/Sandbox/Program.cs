@@ -11,13 +11,18 @@ Console.WriteLine("Hello, World!");
 
 // explore JSon files writing and reading
 // create a Person instance with name, adderss and employments 
-Person me = new Person();
+
+Person me = CreatePerson();
 DisplayPerson(me);
 
 //file path C:\Temp\EmploymentData.json
 string filepathname = @"C:\Temp\EmploymentData.json";
-
 SaveAsJson(me, filepathname);
+
+Person jsonMe = ReadAsJson(filepathname);
+DisplayPerson(jsonMe);
+
+
 Person CreatePerson()
 {
     Residence myHome = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
@@ -70,12 +75,34 @@ void SaveAsJson(Person person, string filepathname)
     File.WriteAllText(filepathname, jsonstring);
 
 }
+Person ReadAsJson(string filepathname)
+{
+    Person person = null;
+    try
+    {
+        // bring in the json text file
+        string jsonstring = File.ReadAllText(filepathname);
 
+        // return deserializer to unpack the json string into
+        // the expected structure <Person>
+        // it is IMPORTANT that the greedy constructor parameter names
+        // are identical to the attribute names used in the Json string 
+        // they are NOT case-sensitive 
+        // they do no have to in the same physical order as the json string
+
+        person = JsonSerializer.Deserialize<Person>(jsonstring);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    return person;
+}
 void FileIOCSV()
 {
-
     //create a collection of Employment instances to write out the data
     List<Employment> employments = new List<Employment>();
+
     employments.Add(new Employment("SAS Member", (SupervisoryLevel)Enum.Parse(typeof(SupervisoryLevel), "TeamMember"), DateTime.Parse("2015/06/14"), 3.6));
     employments.Add(new Employment("SAS Lead", (SupervisoryLevel)Enum.Parse(typeof(SupervisoryLevel), "TeamLeader"), DateTime.Parse("2019/01/24"), 2.8));
     employments.Add(new Employment("SAS Lead", (SupervisoryLevel)Enum.Parse(typeof(SupervisoryLevel), "Supervisor"), DateTime.Parse("2021/09/24"), 1.8));
@@ -97,7 +124,7 @@ List<Employment> Read_Employment_Collection_From_CSV()
     //   
 
     //file path C:\Temp\EmploymentData.txt
-    string filepathname = @"C:\Bob\EmploymentData.txt";
+    string filepathname = @"C:\temp\EmploymentData.txt";
 
     Employment employmentInstance = null;
     List<Employment> employmentCollection = new List<Employment>();
@@ -151,7 +178,7 @@ void Write_Employment_Collection_To_CSV(List<Employment> employments)
     //   
 
     //file path C:\Temp\EmploymentData.txt
-    string filepathname = @"C:\Temp\EmploymentData.txt";
+    string filepathname = @"C:\temp\EmploymentData.txt";
 
     //convert List<Employment> into a List<string>
     List<string> employmentCollectionAsStrings = new List<string>();
