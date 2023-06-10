@@ -83,7 +83,23 @@ namespace TDDUnitTestDemo
             // Assert (testing of the action)
             me.FirstName.Should().Be(expectedLastName);
         }
-        [Fact] 
+        [Fact]
+        public void Change_Both_First_And_Last_Name_To_New_Name()
+        {
+            // Arrange
+            Person sut = Make_SUT_Instance();
+            string expectedFirstName = "bob";
+            string expectedLastName = "smith";
+
+            // Act
+            sut.ChangeName(expectedFirstName, expectedLastName);
+
+            // Assert
+            sut.FirstName.Should().Be(expectedFirstName);
+            sut.LastName.Should().Be(expectedLastName);
+
+        }
+        [Fact]
         public void Return_The_FullName_Of_The_Person()
         {
             // Arrange
@@ -109,44 +125,57 @@ namespace TDDUnitTestDemo
             actual.Should().Be(0);
         }
 
-        [Fact] 
+        [Fact]
         public void Add_First_Employment_Instance()
         {
             // Arrange
             Person sut = Make_SUT_Instance();
-            
+
             int expectedNumberOfEmployment = 1;
 
             Employment employment = new Employment("TDD member", SupervisoryLevel.TeamMember, new DateTime(2018, 05, 10));
 
             // Act
-            sut.AddEmployment(null);
+            sut.AddEmployment(employment);
 
             // Assert
             sut.NumberOfEmployments.Should().Be(expectedNumberOfEmployment);
-            sut.EmploymentPositions.ToString().Should().Be(employment.ToString());
+            sut.EmploymentPositions[0].ToString().Should().Be(employment.ToString());
         }
         [Fact]
         public void Add_Another_Employment_Instance()
         {
-            // Arrange
-            string firstName = "Hai";
-            string lastName = "Le";
+            //Arrange (setup)
+            //no employment instances
+
+            string firstname = "don";
+            string lastname = "welch";
             Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
+
             List<Employment> employments = new List<Employment>();
+            Employment emp1 = new Employment("TDD member", SupervisoryLevel.TeamMember, new DateTime(2016, 03, 10));
+            Employment emp2 = new Employment("TDD Lead", SupervisoryLevel.TeamLeader, new DateTime(2020, 03, 10));
+            employments.Add(emp1);
+            employments.Add(emp2);
+            Person sut = new Person(firstname, lastname, address, employments);
 
-            employments.Add(new Employment("TDD Member", SupervisoryLevel.TeamMember, new DateTime(2016, 05, 10)));
-            employments.Add(new Employment("TDD Lead", SupervisoryLevel.TeamLeader, new DateTime(2020, 05, 10)));
+            Employment employment = new Employment("TDD Supervisor", SupervisoryLevel.Supervisor, new DateTime(2023, 03, 10));
 
-            Person sut = new Person(firstName, lastName, address, employments);
+            int expectednumberofemployment = 3;
+            List<Employment> expectedemployments = new List<Employment>()
+            {
+                emp1,
+                emp2,
+                employment
+            };
 
-            int expectedNumberOfEmployment = 3;
+            //Act (execution)
+            sut.AddEmployment(employment);
 
-            // Act
-            sut.AddEmployment(new Employment("TDD Supervisor", SupervisoryLevel.Supervisor, new DateTime(2023, 05, 10)));
 
-            // Assert
-            sut.NumberOfEmployments.Should().Be(expectedNumberOfEmployment);
+            //Assert (testing of the action)
+            sut.NumberOfEmployments.Should().Be(expectednumberofemployment);
+            sut.EmploymentPositions.Should().ContainInConsecutiveOrder(expectedemployments);
         }
         #endregion
 
@@ -210,7 +239,25 @@ namespace TDDUnitTestDemo
             // Assert (testing of the action)
             action.Should().Throw<ArgumentNullException>();
         }
+        [Theory]
+        [InlineData(null, "Le")]
+        [InlineData("Hai", null)]
+        [InlineData("", "Le")]
+        [InlineData("Hai", "")]
+        [InlineData("   ", "Le")]
+        [InlineData("Hai", "   ")]
+        public void Throw_Exception_When_Changing_First_And_Last_Name_With_Missing_Data(string newFirstName, string newLastName)
+        {
+            // Arrange
+            Person sut = Make_SUT_Instance();
 
+            // Act
+            Action action = () => sut.ChangeName(newFirstName, newLastName);
+
+            // Assert
+            action.Should().Throw<ArgumentNullException>().WithMessage("*is required*");
+        }
+        [Fact]
         public void Throw_Exception_When_Adding_Null_Employment_Instance()
         {
             // Arrange
@@ -225,8 +272,6 @@ namespace TDDUnitTestDemo
             // Assert
             action.Should().Throw<ArgumentNullException>().WithMessage("*required*");
         }
-        
-
         #endregion
 
     }
